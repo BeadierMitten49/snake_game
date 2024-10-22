@@ -1,4 +1,13 @@
 import random
+from enum import Enum
+
+
+class Directions(Enum):
+    up = 0
+    down = 1
+    right = 2
+    left = 3
+
 
 def create_grid(grid_h, grid_w):
     grid = [[0 for _ in range(grid_w)] for _ in range(grid_h)]
@@ -17,10 +26,38 @@ class WindowService:
 
         self.food_coordinates = ()
 
+        self.direction = Directions.right
+
     def move(self):
+        match self.direction:
+            case Directions.up:
+                self.snake_head.move_up()
+
+            case Directions.down:
+                self.snake_head.move_down()
+
+            case Directions.left:
+                self.snake_head.move_left()
+
+            case Directions.right:
+                self.snake_head.move_right()
+
         self.add_snake()
+
         if len(self.snake) > self.snake_len:
             self.remove_snake()
+
+    def direction_down(self):
+        self.direction = Directions.down
+
+    def direction_up(self):
+        self.direction = Directions.up
+
+    def direction_right(self):
+        self.direction = Directions.right
+
+    def direction_left(self):
+        self.direction = Directions.left
 
     def add_snake(self):
         self.snake.append((self.snake_head.x, self.snake_head.y))

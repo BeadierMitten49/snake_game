@@ -31,25 +31,25 @@ class Window(tk.Tk):
         self.bind("<Right>", self.move_right)
         self.bind("<Left>", self.move_left)
 
-        self.bind("<space>", self.create_food)
+        # self.bind("<space>", self.create_food)
+
+        self.window_service.create_food()
+        self.update_snake()
 
     def move_up(self, event):
-        self.window_service.snake_head.move_up()
-        self.update_snake()
+        self.window_service.direction_up()
 
     def move_down(self, event):
-        self.window_service.snake_head.move_down()
-        self.update_snake()
+        self.window_service.direction_down()
 
     def move_right(self, event):
-        self.window_service.snake_head.move_right()
-        self.update_snake()
+        self.window_service.direction_right()
 
     def move_left(self, event):
-        self.window_service.snake_head.move_left()
-        self.update_snake()
+        self.window_service.direction_left()
 
     def update_snake(self):
+        self.after(200, self.update_snake)
         self.window_service.move()
         self.window_service.food_eaten()
         self.grid_frame.update_grid()
